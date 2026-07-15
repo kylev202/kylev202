@@ -5,7 +5,9 @@
   (env var PAT_1 = a GitHub token) and replace the host in the four card URLs below.
 -->
 <!-- ══════════════════  HEADER  ══════════════════ -->
-<h1 align="center">Hi, I'm Kyle Vu 👋</h1>
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D1117,100:2F81F7&height=180&section=header&text=Hi,%20I'm%20Kyle%20Vu%20%F0%9F%91%8B&fontSize=46&fontColor=ffffff&fontAlignY=40&animation=fadeIn" alt="Kyle Vu" width="100%" />
+</p>
 
 <p align="center">
   <a href="https://github.com/kylev202">
@@ -22,7 +24,7 @@
   <img src="https://komarev.com/ghpvc/?username=kylev202&label=Views&color=2F81F7&style=for-the-badge" alt="views" />
 </p>
 
-<br/>
+<hr width="60%" color="#2F81F7"/>
 
 <!-- ══════════════════  ABOUT  ══════════════════ -->
 <p align="center">
@@ -37,7 +39,7 @@
   💬 &nbsp;Ask me about Tauri, FSRS, or study tooling
 </p>
 
-<br/>
+<hr width="60%" color="#2F81F7"/>
 
 <!-- ══════════════════  TECH STACK  ══════════════════ -->
 <h3 align="center">🛠️ &nbsp;Tech Stack</h3>
@@ -46,7 +48,7 @@
   <img src="https://skillicons.dev/icons?i=ts,js,rust,python,react,tauri,fastapi,sqlite,vite,git&theme=dark" alt="skills" />
 </p>
 
-<br/>
+<hr width="60%" color="#2F81F7"/>
 
 <!-- ══════════════════  FEATURED  ══════════════════ -->
 <h3 align="center">🚀 &nbsp;Featured Projects</h3>
@@ -66,7 +68,7 @@
   repetition. Everything stays on your device; nothing enters your decks until you approve it.
 </p>
 
-<br/>
+<hr width="60%" color="#2F81F7"/>
 
 <!-- ══════════════════  STATS  ══════════════════ -->
 <h3 align="center">📊 &nbsp;GitHub Stats</h3>
