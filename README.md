@@ -7,7 +7,7 @@
 <!-- ══════════════════  HEADER  ══════════════════ -->
 <h1 align="center">
   Kyle Vu
-  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="👋" width="32" height="32" />
+  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f47d/lottie.json" alt="👽" width="32" height="32" />
 </h1>
 
 <p align="center">
@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+  <img width="70%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=2" alt="" />
 </p>
 
 <!-- ══════════════════  ABOUT  ══════════════════ -->
@@ -43,7 +43,7 @@
 </p>
 
 <p align="center">
-  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+  <img width="70%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=2" alt="" />
 </p>
 
 <!-- ══════════════════  TECH STACK  ══════════════════ -->
@@ -51,55 +51,56 @@
 
 <table align="center">
   <tr>
-    <td align="right"><sub><b>Languages</b></sub></td>
-    <td><img src="https://skillicons.dev/icons?i=ts,js,rust,python&theme=dark" alt="languages" height="40" /></td>
+    <td align="center"><sub><b>Languages</b></sub></td>
+    <td align="center"><sub><b>Frontend</b></sub></td>
+    <td align="center"><sub><b>Backend</b></sub></td>
+    <td align="center"><sub><b>Tooling</b></sub></td>
   </tr>
   <tr>
-    <td align="right"><sub><b>Frontend</b></sub></td>
-    <td><img src="https://skillicons.dev/icons?i=react,vite,tauri&theme=dark" alt="frontend" height="40" /></td>
-  </tr>
-  <tr>
-    <td align="right"><sub><b>Backend</b></sub></td>
-    <td><img src="https://skillicons.dev/icons?i=fastapi,sqlite&theme=dark" alt="backend" height="40" /></td>
-  </tr>
-  <tr>
-    <td align="right"><sub><b>Tooling</b></sub></td>
-    <td><img src="https://skillicons.dev/icons?i=git,github,vscode&theme=dark" alt="tooling" height="40" /></td>
+    <td align="center"><img src="https://skillicons.dev/icons?i=ts,js,rust,python&theme=dark" alt="languages" height="42" /></td>
+    <td align="center"><img src="https://skillicons.dev/icons?i=react,vite,tauri&theme=dark" alt="frontend" height="42" /></td>
+    <td align="center"><img src="https://skillicons.dev/icons?i=fastapi,sqlite&theme=dark" alt="backend" height="42" /></td>
+    <td align="center"><img src="https://skillicons.dev/icons?i=git,github,vscode&theme=dark" alt="tooling" height="42" /></td>
   </tr>
 </table>
 
 <p align="center">
-  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+  <img width="70%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=2" alt="" />
 </p>
 
 <!-- ══════════════════  FEATURED  ══════════════════ -->
 <h3 align="center">🚀 &nbsp;Featured Projects</h3>
 
-<p align="center">
-  <a href="https://github.com/kylev202/Arbora">
-    <img src="https://github-readme-stats-delta-ashy-43.vercel.app/api/pin/?username=kylev202&repo=Arbora&theme=github_dark&hide_border=true&icon_color=2F81F7&title_color=2F81F7" alt="Arbora" />
-  </a>
-  <a href="https://github.com/kylev202/2026Portfolio">
-    <img src="https://github-readme-stats-delta-ashy-43.vercel.app/api/pin/?username=kylev202&repo=2026Portfolio&theme=github_dark&hide_border=true&icon_color=2F81F7&title_color=2F81F7" alt="2026Portfolio" />
-  </a>
-</p>
+<table align="center">
+  <tr>
+    <td width="50%" valign="top" align="center">
+      <a href="https://github.com/kylev202/Arbora">
+        <img src="https://github-readme-stats-delta-ashy-43.vercel.app/api/pin/?username=kylev202&repo=Arbora&theme=github_dark&hide_border=true&icon_color=2F81F7&title_color=2F81F7" alt="Arbora" />
+      </a>
+      <p><sub>A local-first study assistant that turns documents and lectures into grounded, cited notes, flashcards, and quizzes — then schedules review with FSRS spaced repetition. Everything stays on your device.</sub></p>
+      <p>
+        <img src="https://img.shields.io/badge/Tauri-24C8DB?style=flat-square&logo=tauri&logoColor=white" alt="Tauri" />
+        <img src="https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
+        <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
+        <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" />
+      </p>
+    </td>
+    <td width="50%" valign="top" align="center">
+      <a href="https://github.com/kylev202/2026Portfolio">
+        <img src="https://github-readme-stats-delta-ashy-43.vercel.app/api/pin/?username=kylev202&repo=2026Portfolio&theme=github_dark&hide_border=true&icon_color=2F81F7&title_color=2F81F7" alt="2026Portfolio" />
+      </a>
+      <p><sub>My personal portfolio — selected projects, background, and ways to get in touch. Built and served as a static site on GitHub Pages.</sub></p>
+      <p>
+        <a href="https://kylev202.github.io/2026Portfolio/"><img src="https://img.shields.io/badge/Live_Demo-2F81F7?style=flat-square&logo=googlechrome&logoColor=white" alt="Live Demo" /></a>
+        <img src="https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white" alt="GitHub Pages" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 <p align="center">
-  <b>Arbora</b> — a local-first study assistant that turns your documents and lectures into
-  grounded, cited notes, flashcards, and quizzes,<br/>then schedules review with FSRS spaced
-  repetition. Everything stays on your device; nothing enters your decks until you approve it.
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Tauri-24C8DB?style=flat-square&logo=tauri&logoColor=white" alt="Tauri" />
-  <img src="https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
-  <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" />
-</p>
-
-<p align="center">
-  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+  <img width="70%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=2" alt="" />
 </p>
 
 <!-- ══════════════════  STATS  ══════════════════ -->
@@ -112,10 +113,6 @@
 
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=kylev202&hide_border=true&theme=github-dark&ring=2F81F7&fire=2F81F7&currStreakLabel=2F81F7" alt="streak" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=kylev202&hide_border=true&bg_color=0d1117&color=2f81f7&line=2f81f7&point=ffffff&area=true&area_color=2f81f7" alt="contribution graph" />
 </p>
 
 <!-- Contribution snake — populated by .github/workflows/snake.yml after its first run -->
