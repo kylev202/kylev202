@@ -20,6 +20,8 @@
   <a href="https://github.com/kylev202?tab=repositories">All repositories</a>
 </p>
 
+<img src="https://komarev.com/ghpvc/?username=kylev202&label=Profile%20views&color=4CC38A&style=flat" alt="Profile views" />
+
 I build practical, well-crafted software — tools that make learning and everyday work easier.
 I care about **local-first architecture**, thoughtful UX, and getting the details right.
 
@@ -66,5 +68,11 @@ on GitHub Pages. **[Visit the live site →](https://kylev202.github.io/2026Port
     <img height="160" src="https://github-readme-stats-delta-ashy-43.vercel.app/api/top-langs/?username=kylev202&layout=compact&hide_border=true&langs_count=6&bg_color=00000000&title_color=1A7F4B&text_color=59636E" alt="Most-used languages">
   </picture>
 </p>
+
+<!-- Contribution snake — regenerated daily to the `output` branch by .github/workflows/snake.yml -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kylev202/kylev202/output/github-contribution-grid-snake-dark.svg">
+  <img src="https://raw.githubusercontent.com/kylev202/kylev202/output/github-contribution-grid-snake.svg" alt="Contribution snake eating this year's commits" width="100%">
+</picture>
 
 <sub><i>Build things that help.</i></sub>
