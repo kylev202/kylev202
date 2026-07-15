@@ -6,12 +6,12 @@
 -->
 <!-- ══════════════════  HEADER  ══════════════════ -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D1117,100:2F81F7&height=180&section=header&text=Hi,%20I'm%20Kyle%20Vu%20%F0%9F%91%8B&fontSize=46&fontColor=ffffff&fontAlignY=40&animation=fadeIn" alt="Kyle Vu" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=rounded&color=0:0D1117,100:1F6FEB&height=150&section=header&text=Kyle%20Vu&fontSize=42&fontColor=ffffff&fontAlignY=38&desc=Full-Stack%20Software%20Engineer&descSize=18&descAlignY=62&descColor=8B949E&animation=fadeIn" alt="Kyle Vu" width="100%" />
 </p>
 
 <p align="center">
   <a href="https://github.com/kylev202">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=22&duration=3000&pause=1000&color=2F81F7&center=true&vCenter=true&width=520&lines=Full-stack+developer;Local-first+%26+privacy-first+apps;Currently+building+Arbora;TypeScript+%C2%B7+React+%C2%B7+Rust+%C2%B7+Python" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=22&duration=3000&pause=1000&color=2F81F7&center=true&vCenter=true&width=520&lines=Local-first+%26+privacy-first+apps;Currently+building+Arbora;TypeScript+%C2%B7+React+%C2%B7+Rust+%C2%B7+Python" alt="Typing SVG" />
   </a>
 </p>
 
@@ -24,7 +24,9 @@
   <img src="https://komarev.com/ghpvc/?username=kylev202&label=Views&color=2F81F7&style=for-the-badge" alt="views" />
 </p>
 
-<hr width="60%" color="#2F81F7"/>
+<p align="center">
+  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+</p>
 
 <!-- ══════════════════  ABOUT  ══════════════════ -->
 <p align="center">
@@ -39,7 +41,9 @@
   💬 &nbsp;Ask me about Tauri, FSRS, or study tooling
 </p>
 
-<hr width="60%" color="#2F81F7"/>
+<p align="center">
+  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+</p>
 
 <!-- ══════════════════  TECH STACK  ══════════════════ -->
 <h3 align="center">🛠️ &nbsp;Tech Stack</h3>
@@ -48,7 +52,9 @@
   <img src="https://skillicons.dev/icons?i=ts,js,rust,python,react,tauri,fastapi,sqlite,vite,git&theme=dark" alt="skills" />
 </p>
 
-<hr width="60%" color="#2F81F7"/>
+<p align="center">
+  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+</p>
 
 <!-- ══════════════════  FEATURED  ══════════════════ -->
 <h3 align="center">🚀 &nbsp;Featured Projects</h3>
@@ -68,7 +74,9 @@
   repetition. Everything stays on your device; nothing enters your decks until you approve it.
 </p>
 
-<hr width="60%" color="#2F81F7"/>
+<p align="center">
+  <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
+</p>
 
 <!-- ══════════════════  STATS  ══════════════════ -->
 <h3 align="center">📊 &nbsp;GitHub Stats</h3>
