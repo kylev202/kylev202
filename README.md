@@ -16,7 +16,7 @@
 <p>
   <a href="https://kylev202.github.io/2026Portfolio/"><b>Portfolio</b></a>&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/duykhiemvu/">LinkedIn</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-  <a href="mailto:klizsan03@gmail.com">Email</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="mailto:kylevu858@gmail.com">Email</a>&nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://github.com/kylev202?tab=repositories">All repositories</a>
 </p>
 
