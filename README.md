@@ -5,13 +5,14 @@
   (env var PAT_1 = a GitHub token) and replace the host in the four card URLs below.
 -->
 <!-- ══════════════════  HEADER  ══════════════════ -->
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rounded&color=0:0D1117,100:1F6FEB&height=150&section=header&text=Kyle%20Vu&fontSize=42&fontColor=ffffff&fontAlignY=38&desc=Full-Stack%20Software%20Engineer&descSize=18&descAlignY=62&descColor=8B949E&animation=fadeIn" alt="Kyle Vu" width="100%" />
-</p>
+<h1 align="center">
+  Kyle Vu
+  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="👋" width="32" height="32" />
+</h1>
 
 <p align="center">
   <a href="https://github.com/kylev202">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=22&duration=3000&pause=1000&color=2F81F7&center=true&vCenter=true&width=520&lines=Local-first+%26+privacy-first+apps;Currently+building+Arbora;TypeScript+%C2%B7+React+%C2%B7+Rust+%C2%B7+Python" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=22&duration=3000&pause=1000&color=2F81F7&center=true&vCenter=true&width=520&lines=Full-Stack+Software+Engineer;Local-first+%26+privacy-first+apps;Currently+building+Arbora;TypeScript+%C2%B7+React+%C2%B7+Rust+%C2%B7+Python" alt="Typing SVG" />
   </a>
 </p>
 
@@ -48,9 +49,24 @@
 <!-- ══════════════════  TECH STACK  ══════════════════ -->
 <h3 align="center">🛠️ &nbsp;Tech Stack</h3>
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=ts,js,rust,python,react,tauri,fastapi,sqlite,vite,git&theme=dark" alt="skills" />
-</p>
+<table align="center">
+  <tr>
+    <td align="right"><sub><b>Languages</b></sub></td>
+    <td><img src="https://skillicons.dev/icons?i=ts,js,rust,python&theme=dark" alt="languages" height="40" /></td>
+  </tr>
+  <tr>
+    <td align="right"><sub><b>Frontend</b></sub></td>
+    <td><img src="https://skillicons.dev/icons?i=react,vite,tauri&theme=dark" alt="frontend" height="40" /></td>
+  </tr>
+  <tr>
+    <td align="right"><sub><b>Backend</b></sub></td>
+    <td><img src="https://skillicons.dev/icons?i=fastapi,sqlite&theme=dark" alt="backend" height="40" /></td>
+  </tr>
+  <tr>
+    <td align="right"><sub><b>Tooling</b></sub></td>
+    <td><img src="https://skillicons.dev/icons?i=git,github,vscode&theme=dark" alt="tooling" height="40" /></td>
+  </tr>
+</table>
 
 <p align="center">
   <img width="45%" height="2" src="https://capsule-render.vercel.app/api?type=rect&color=0:0D1117,50:2F81F7,100:0D1117&height=3" alt="" />
@@ -72,6 +88,14 @@
   <b>Arbora</b> — a local-first study assistant that turns your documents and lectures into
   grounded, cited notes, flashcards, and quizzes,<br/>then schedules review with FSRS spaced
   repetition. Everything stays on your device; nothing enters your decks until you approve it.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Tauri-24C8DB?style=flat-square&logo=tauri&logoColor=white" alt="Tauri" />
+  <img src="https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
+  <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" />
 </p>
 
 <p align="center">
@@ -101,4 +125,4 @@
 
 <br/>
 
-<p align="center"><sub><i>Build things helpful.</i></sub></p>
+<p align="center"><sub><i>Build things that help.</i></sub></p>
