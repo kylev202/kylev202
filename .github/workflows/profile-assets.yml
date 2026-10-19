@@ -18,8 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Render contribution graph
-        run: python3 scripts/activity_graph.py "${{ github.repository_owner }}" dist/activity-graph.svg --name=Kyle
+      - name: Render stats and contribution graph
+        run: python3 scripts/profile_stats.py "${{ github.repository_owner }}" dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

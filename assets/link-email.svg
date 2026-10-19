@@ -1,0 +1,5 @@
+<svg width="160" height="40" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="email" font-family="ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace">
+<style>text{white-space:pre}</style>
+<rect x=".5" y=".5" width="159" height="39" rx="8" fill="#0D1117" stroke="#30363D"/>
+<text text-anchor="middle" x="48.8 56.6" y="25" font-size="13" fill="#484F58">./</text><text text-anchor="middle" x="64.4 72.2 80 87.8 95.6" y="25" font-size="13" fill="#C9D1D9">email</text><text text-anchor="middle" x="111.2" y="25" font-size="13" fill="#8B949E">↗</text>
+</svg>
