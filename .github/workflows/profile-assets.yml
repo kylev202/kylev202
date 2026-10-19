@@ -1,4 +1,4 @@
-name: Generate Snake Animation
+name: Generate profile assets
 
 on:
   schedule:
@@ -16,13 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Generate snake SVGs
-        uses: Platane/snk@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/github-contribution-grid-snake.svg?color_snake=%231E1B16&color_dots=%23ebedf0,%23d9d4c7,%23aaa496,%236f6a5d,%231E1B16
-            dist/github-contribution-grid-snake-dark.svg?color_snake=%23ECE6D6&color_dots=%23161b22,%233a372f,%23615c50,%239a9483,%23ECE6D6
+      - uses: actions/checkout@v4
+
+      - name: Render contribution graph
+        run: python3 scripts/activity_graph.py "${{ github.repository_owner }}" dist/activity-graph.svg --name=Kyle
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v4

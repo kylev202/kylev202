@@ -2,223 +2,220 @@
 
     python scripts/build_ascii.py
 
-Every glyph is placed on an explicit character grid (per-character x positions),
-so the art stays aligned no matter which monospace font the viewer's system picks.
-Edit the art/text below and re-run; outputs land in assets/.
+Writes assets/banner.svg (ASCII dunes + title) and assets/astronaut.svg (floating
+ASCII astronaut). Every glyph sits on an explicit character grid (per-character x
+positions), so the art stays aligned whatever monospace font the viewer has.
 """
 
+import math
+import random
 from pathlib import Path
 from xml.sax.saxutils import escape
 
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
 MONO = "ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace"
-
-THEMES = {
-    # bone-on-ink, like an old print
-    "dark": {"hi": "#ECE6D6", "mid": "#B3AC99", "dim": "#7A7465", "faint": "#4A463D"},
-    "light": {"hi": "#1E1B16", "mid": "#4D483E", "dim": "#8A8475", "faint": "#BFB9A9"},
-}
-
-# ── art ──────────────────────────────────────────────────────────────────────
-
-NAME = [  # ANSI Shadow
-    "██╗  ██╗██╗   ██╗██╗     ███████╗    ██╗   ██╗██╗   ██╗",
-    "██║ ██╔╝╚██╗ ██╔╝██║     ██╔════╝    ██║   ██║██║   ██║",
-    "█████╔╝  ╚████╔╝ ██║     █████╗      ██║   ██║██║   ██║",
-    "██╔═██╗   ╚██╔╝  ██║     ██╔══╝      ╚██╗ ██╔╝██║   ██║",
-    "██║  ██╗   ██║   ███████╗███████╗     ╚████╔╝ ╚██████╔╝",
-    "╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝      ╚═══╝   ╚═════╝ ",
-]
-
-TREE = [  # a nod to Arbora
-    "             .        *       .",
-    "       *         .:%%%%%%:.        .",
-    "           .:%%%%%%@@%%%%%%%%:.",
-    "         :%%%%@@%%%%%%%%%%@@%%%%:   *",
-    "   .    %%%%%%%%%%%%%%@@%%%%%%%%%%",
-    "       :%%%@@%%%%%%%%%%%%%%%%@@%%%:",
-    "        '%%%%%%%%%@@%%%%%%%%%%%%%'",
-    "          '%%%%%%\\%%%|%%/%%%%%'    .",
-    "             '%%%%\\  | /%%%'",
-    "                   \\ |/",
-    "                    |||",
-    "                    |||",
-    "                   /|||\\",
-    "        ,.~-~.,___/ ||| \\___,.~-~.,",
-]
-TREE_TONE = {"@": "hi", "%": "mid"}  # everything else is dim
-
-LACE = "._.-'~'-"
+BG = "#0D1117"  # GitHub dark canvas, so the art blends in
 
 
-# ── svg helpers ──────────────────────────────────────────────────────────────
+def gray(b):
+    v = round(40 + b * 215)
+    return f"#{v:02X}{v:02X}{v:02X}"
 
-class Canvas:
-    def __init__(self, cols, rows, cw=8.0, lh=17.0, size=13.3, pad_y=14.0):
-        self.cols, self.rows = cols, rows
-        self.cw, self.lh, self.size, self.pad_y = cw, lh, size, pad_y
-        self.items = []  # (svg string)
-        self.taken = set()  # (col, row) cells holding a glyph or reserved
 
-    @property
-    def width(self):
-        return self.cols * self.cw
+def text_row(glyphs, y, size, fill, extra=""):
+    """glyphs: [(x_center, ch)] — one <text> with per-character x positions."""
+    xs = " ".join(f"{x:g}" for x, _ in glyphs)
+    chars = escape("".join(ch for _, ch in glyphs))
+    return f'<text x="{xs}" y="{y:g}" font-size="{size}" fill="{fill}"{extra}>{chars}</text>'
 
-    @property
-    def height(self):
-        return self.rows * self.lh + self.pad_y * 2
 
-    def y(self, row):
-        return self.pad_y + row * self.lh + self.lh * 0.8
+def svg(w, h, label, css, body, rx=6):
+    return (
+        f'<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" '
+        f'role="img" aria-label="{escape(label)}">\n'
+        f"<style>text{{font-family:{MONO};text-anchor:middle;white-space:pre}}{css}</style>\n"
+        f'<clipPath id="c"><rect width="{w}" height="{h}" rx="{rx}"/></clipPath>\n'
+        f'<g clip-path="url(#c)"><rect width="{w}" height="{h}" fill="{BG}"/>\n{body}\n</g>\n</svg>\n'
+    )
 
-    def put(self, col, row, text, cls, *, tone=None, mark=True):
-        """Place text on the grid. `tone` maps a char to a class override."""
-        runs = {}
-        for i, ch in enumerate(text):
+
+def smooth(e0, e1, x):
+    t = min(max((x - e0) / (e1 - e0), 0.0), 1.0)
+    return t * t * (3 - 2 * t)
+
+
+# ── banner: ASCII desert dunes with a winding river ──────────────────────────
+
+W, H = 880, 280
+CW, LH, FS = 5.4, 9.0, 9
+COLS, ROWS = int((W - 4) // CW), int(H // LH)
+RAMP = " .`',:;-~=+*o#%&@"  # dark → bright
+TONES = 9  # fill colours are quantised so each row needs only a handful of <text> runs
+HORIZON = 0.42  # as a fraction of banner height
+
+
+def make_dunes():
+    """Layers far → near; each is (base y, [(peak x, half-width, height)…])."""
+    rng = random.Random(11)
+    layers = []
+    for base, w in [(0.03, 0.07), (0.10, 0.11), (0.20, 0.16), (0.34, 0.24), (0.52, 0.34)]:
+        peaks, x = [], -rng.uniform(0, w)
+        while x < 1 + w:
+            peaks.append((x, w * rng.uniform(0.8, 1.2), w * rng.uniform(0.35, 0.6)))
+            x += w * rng.uniform(1.1, 1.7)
+        layers.append((HORIZON + base, peaks))
+    return layers
+
+
+DUNES = make_dunes()
+
+
+def crest(layer, x):
+    """Top edge of a dune layer at x, plus the peak that forms it."""
+    base, peaks = DUNES[layer]
+    best, top = None, base
+    for px, w, h in peaks:
+        u = (x - px) / (w * (1.25 if x < px else 0.7))  # gentle windward side, steep slip face
+        y = base - h * max(0.0, 1 - abs(u)) ** 1.4
+        if y < top:
+            best, top = (px, w, h), y
+    return top, best
+
+
+def river(y):
+    """River centre x and half-width at height y (perspective: meanders tighten far away)."""
+    t = (y - HORIZON) / (1 - HORIZON)
+    x = 0.5 + (0.02 + 0.16 * t) * math.sin(1.4 / (t + 0.12) + 0.3)
+    return x, 0.002 + 0.045 * t**1.4
+
+
+def brightness(x, y):
+    if y < HORIZON:  # sky glowing toward the horizon
+        return 0.03 + 0.40 * math.exp(-(HORIZON - y) * 9)
+
+    t = (y - HORIZON) / (1 - HORIZON)
+    if y > HORIZON + 0.015:
+        rx, half = river(y)
+        d = abs(x - rx)
+        if d < half:
+            return 0.80 + 0.2 * (1 - d / half)
+        if d < half + 0.006 + 0.01 * t:
+            return 0.12  # dark bank
+
+    layer = max((k for k in range(len(DUNES)) if y >= crest(k, x)[0]), default=None)
+    if layer is None:
+        return 0.30
+    top, peak = crest(layer, x)
+    depth = y - top
+    lit = peak is None or x < peak[0]
+    if lit:
+        b = max(0.28, 0.72 - 2.2 * depth)
+        if depth < 0.012:
+            b = 0.92
+    else:
+        b = 0.10 + 0.06 * math.exp(-depth / 0.04)
+        if depth < 0.010:
+            b = 0.55
+    haze = 1 - layer / (len(DUNES) - 1)
+    return b + (0.32 - b) * 0.55 * haze
+
+
+def banner():
+    rng = random.Random(7)
+    rows, stars = [], []
+    for r in range(ROWS):
+        y_n = (r + 0.5) / ROWS
+        by_tone = {}
+        for c in range(COLS):
+            x_px = 2 + c * CW + CW / 2
+            b = (brightness(x_px / W, (r + 0.3) / ROWS) + brightness(x_px / W, (r + 0.7) / ROWS)) / 2
+            # carve a soft clearing in the sky for the title
+            e = ((x_px / W - 0.5) / 0.30) ** 2 + ((y_n - 0.24) / 0.15) ** 2
+            b *= smooth(0.5, 1.2, e)
+            if y_n < HORIZON - 0.08 and e > 1.2 and rng.random() < 0.018:
+                stars.append((x_px, (r + 0.8) * LH, rng.choice("*+.")))
+                continue
+            ch = RAMP[min(int(b * len(RAMP)), len(RAMP) - 1)]
             if ch == " ":
                 continue
-            c = tone.get(ch, cls) if tone else cls
-            runs.setdefault(c, []).append((col + i, ch))
-            if mark:
-                self.taken.add((col + i, row))
-        for c, glyphs in runs.items():
-            self.items.append(self._text(glyphs, self.y(row), c, self.cw, self.size))
+            tone = min(int(b * TONES), TONES - 1)
+            by_tone.setdefault(tone, []).append((x_px, ch))
+        for tone, glyphs in sorted(by_tone.items()):
+            rows.append(text_row(glyphs, (r + 0.8) * LH, FS, gray((tone + 0.5) / TONES)))
 
-    def reserve(self, col0, row0, col1, row1):
-        for c in range(col0, col1 + 1):
-            for r in range(row0, row1 + 1):
-                self.taken.add((c, r))
+    for n, (x, y, ch) in enumerate(stars):
+        rows.append(text_row([(x, ch)], y, FS, "#E6EDF3", f' class="tw t{n % 4}"'))
 
-    @staticmethod
-    def _text(glyphs, y, cls, cw, size, x0=0.0, extra=""):
-        xs = " ".join(f"{x0 + c * cw + cw / 2:g}" for c, _ in glyphs)
-        chars = escape("".join(ch for _, ch in glyphs))
-        return f'<text class="{cls}" x="{xs}" y="{y:g}" font-size="{size}"{extra}>{chars}</text>'
+    title_y = H * 0.22
+    rows.append(f'<text x="{W / 2}" y="{title_y:g}" font-size="26" fill="#F0F6FC">Welcome to Kyle\'s GitHub</text>')
+    rows.append(f'<text x="{W / 2}" y="{title_y + 32:g}" font-size="20" fill="#C9D1D9">&lt;/&gt;<tspan class="cur">_</tspan></text>')
 
-    def render(self, theme, label, extra_css=""):
-        t = THEMES[theme]
-        css = (
-            f"text{{font-family:{MONO};text-anchor:middle;white-space:pre}}"
-            f".hi{{fill:{t['hi']}}}.mid{{fill:{t['mid']}}}.dim{{fill:{t['dim']}}}.faint{{fill:{t['faint']}}}"
-            f".hi-f{{fill:{t['hi']}}}.mid-s{{stroke:{t['mid']}}}"
-            + extra_css
-        )
-        body = "\n  ".join(self.items)
-        w, h = self.width, self.height
-        return (
-            f'<svg width="{w:g}" height="{h:g}" viewBox="0 0 {w:g} {h:g}" '
-            f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{escape(label)}">\n'
-            f"  <style>{css}</style>\n  {body}\n</svg>\n"
-        )
-
-
-# Double-line box glyphs as polylines in a cell (cx/cy = centre, o = half gap).
-BOX = {
-    "═": lambda w, h, cx, cy, o: [[(0, cy - o), (w, cy - o)], [(0, cy + o), (w, cy + o)]],
-    "║": lambda w, h, cx, cy, o: [[(cx - o, 0), (cx - o, h)], [(cx + o, 0), (cx + o, h)]],
-    "╗": lambda w, h, cx, cy, o: [[(0, cy - o), (cx + o, cy - o), (cx + o, h)], [(0, cy + o), (cx - o, cy + o), (cx - o, h)]],
-    "╔": lambda w, h, cx, cy, o: [[(w, cy - o), (cx - o, cy - o), (cx - o, h)], [(w, cy + o), (cx + o, cy + o), (cx + o, h)]],
-    "╝": lambda w, h, cx, cy, o: [[(0, cy + o), (cx + o, cy + o), (cx + o, 0)], [(0, cy - o), (cx - o, cy - o), (cx - o, 0)]],
-    "╚": lambda w, h, cx, cy, o: [[(w, cy + o), (cx - o, cy + o), (cx - o, 0)], [(w, cy - o), (cx + o, cy - o), (cx + o, 0)]],
-}
-
-
-def block_art(lines, x0, y0, cw, lh):
-    """Render ANSI-Shadow style art: █ runs become rects, box glyphs become strokes."""
-    rects, strokes = [], []
-    for r, line in enumerate(lines):
-        y = y0 + r * lh
-        c = 0
-        while c < len(line):
-            if line[c] == "█":
-                start = c
-                while c < len(line) and line[c] == "█":
-                    c += 1
-                rects.append(f'<rect x="{x0 + start * cw:g}" y="{y:g}" width="{(c - start) * cw:g}" height="{lh:g}"/>')
-                continue
-            if line[c] in BOX:
-                x = x0 + c * cw
-                for pts in BOX[line[c]](cw, lh, cw / 2, lh / 2, 2.0):
-                    strokes.append("M" + " L".join(f"{x + px:g} {y + py:g}" for px, py in pts))
-            c += 1
-    return (
-        f'<g class="hi-f" shape-rendering="crispEdges">{"".join(rects)}</g>'
-        f'<path class="mid-s" fill="none" stroke-width="1.2" d="{" ".join(strokes)}"/>'
-    )
-
-
-def lace(n, offset=0):
-    return "".join(LACE[(i + offset) % len(LACE)] for i in range(n))
-
-
-# ── hero ─────────────────────────────────────────────────────────────────────
-
-def hero(theme):
-    cv = Canvas(cols=110, rows=20)
-    L, R = 1, 108  # frame columns
-
-    cv.put(0, 0, lace(110), "dim")
-    cv.put(L, 1, "+" + "-" * (R - L - 1) + "+", "faint")
-    for r in range(2, 18):
-        cv.put(L, r, "|", "faint")
-        cv.put(R, r, "|", "faint")
-    cv.put(L, 18, "+" + "-" * (R - L - 1) + "+", "faint")
-    cv.put(0, 19, lace(110, offset=4), "dim")
-
-    # title bar
-    cv.put(L + 3, 2, "@kylev202 / README.md", "mid")
-    cv.put(R - 14, 2, "[ - ] [ x ]", "dim")
-    cv.put(L + 1, 3, "·" * (R - L - 1), "faint")
-
-    # name block, drawn as shapes so the blocks join seamlessly
-    cv.items.append(block_art(NAME, x0=4 * cv.cw, y0=cv.pad_y + 4.7 * cv.lh, cw=9.0, lh=16.0))
-
-    # tree on the right; its stars twinkle
-    stars = 0
-    for i, line in enumerate(TREE):
-        for c, ch in enumerate(line):
-            if ch == "*":
-                cv.put(70 + c, 4 + i, ch, f"dim tw t{stars % 4}")
-                stars += 1
-        cv.put(70, 4 + i, line.replace("*", " "), "dim", tone=TREE_TONE)
-
-    # captions
-    cv.put(5, 12, "...or kyle. i just build things.", "mid")
-    cv.put(5, 13, "full-stack engineer  ·  local-first  ·  privacy-first", "dim")
-    cv.put(5, 15, "( You continue to build. )", "hi")
-    cv.put(5 + 27, 15, "█", "hi cur")
-
-    # a few scattered specks of print texture in the empty space
-    for c, r, ch in [(60, 5, "."), (64, 9, "+"), (52, 16, "."), (58, 14, "·"), (3, 16, "."), (40, 17, "'")]:
-        cv.put(c, r, ch, "faint")
-
-    t = THEMES[theme]
     css = (
-        "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}"
-        ".cur{animation:blink 1.1s step-end infinite}"
-        f"@keyframes tw{{0%,100%{{fill:{t['faint']}}}50%{{fill:{t['mid']}}}}}"
-        ".tw{animation:tw 4s ease-in-out infinite}"
-        ".t1{animation-delay:1s}.t2{animation-delay:2s}.t3{animation-delay:3s}"
+        "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}.cur{animation:blink 1.1s step-end infinite}"
+        "@keyframes tw{0%,100%{opacity:.35}50%{opacity:1}}.tw{animation:tw 3.2s ease-in-out infinite}"
+        ".t1{animation-delay:.8s}.t2{animation-delay:1.6s}.t3{animation-delay:2.4s}"
     )
-    return cv.render(theme, "Kyle Vu — full-stack engineer building local-first, privacy-first software", css)
+    return svg(W, H, "Welcome to Kyle's GitHub — ASCII desert dunes with a winding river", css, "\n".join(rows))
 
 
-# ── divider ──────────────────────────────────────────────────────────────────
+# ── astronaut: floating in an ASCII starfield ────────────────────────────────
 
-DIVIDER = "~*~  ._.-'~'-._.-'~'-._  ( ✦ )  _.-'~'-._.-'~'-._.  ~*~"
+ASTRONAUT = [
+    r"        _..._        ",
+    r"      .'     '.      ",
+    r"     /  .---.  \     ",
+    r"    |  /#####\  |    ",
+    r"    |  |#####|  |    ",
+    r"    |  \#####/  |    ",
+    r"     \  '---'  /     ",
+    r"   .--'-.___.-'--.   ",
+    r"  /  |  [===]  |  \  ",
+    r" /  /|  [o o]  |\  \ ",
+    r"(__/ |  [___]  | \__)",
+    r"     |---------|     ",
+    r"     |    |    |     ",
+    r"     |    |    |     ",
+    r"    (____)(____)     ",
+]
 
 
-def divider(theme):
-    cv = Canvas(cols=len(DIVIDER) + 2, rows=1, lh=16, pad_y=2)
-    cv.put(1, 0, DIVIDER, "dim", tone={"✦": "hi"})
-    return cv.render(theme, "")
+def astronaut():
+    s = 260
+    cw, lh, fs = 7.2, 13.0, 12
+    rng = random.Random(42)
+    body = []
+
+    for n in range(46):  # starfield
+        x, y = rng.uniform(6, s - 6), rng.uniform(10, s - 4)
+        ch = rng.choice("....··+*")
+        cls = f' class="tw t{n % 4}"' if ch in "+*" else ""
+        body.append(text_row([(round(x, 1), ch)], round(y, 1), 10, "#8B949E", cls))
+
+    w = len(ASTRONAUT[0]) * cw
+    x0, y0 = (s - w) / 2, (s - len(ASTRONAUT) * lh) / 2
+    art = []
+    for r, line in enumerate(ASTRONAUT):
+        tones = {}
+        for c, ch in enumerate(line):
+            if ch != " ":
+                tones.setdefault("#6E7681" if ch == "#" else "#F0F6FC", []).append((x0 + c * cw + cw / 2, ch))
+        for fill, glyphs in tones.items():
+            art.append(text_row(glyphs, y0 + (r + 0.8) * lh, fs, fill))
+    body.append(f'<g class="float">{"".join(art)}</g>')
+
+    css = (
+        "@keyframes float{0%,100%{transform:translate(0,-6px) rotate(-6deg)}50%{transform:translate(0,6px) rotate(5deg)}}"
+        f".float{{transform-origin:{s / 2}px {s / 2}px;animation:float 7s ease-in-out infinite}}"
+        "@keyframes tw{0%,100%{opacity:.3}50%{opacity:1}}.tw{animation:tw 3s ease-in-out infinite}"
+        ".t1{animation-delay:.75s}.t2{animation-delay:1.5s}.t3{animation-delay:2.25s}"
+    )
+    return svg(s, s, "An ASCII astronaut floating among the stars", css, "\n".join(body))
 
 
 def main():
-    for theme in THEMES:
-        (ASSETS / f"hero-{theme}.svg").write_text(hero(theme), encoding="utf-8")
-        (ASSETS / f"divider-{theme}.svg").write_text(divider(theme), encoding="utf-8")
-    print("wrote", ", ".join(sorted(p.name for p in ASSETS.glob("*.svg"))))
+    (ASSETS / "banner.svg").write_text(banner(), encoding="utf-8")
+    (ASSETS / "astronaut.svg").write_text(astronaut(), encoding="utf-8")
+    print("wrote assets/banner.svg, assets/astronaut.svg")
 
 
 if __name__ == "__main__":
